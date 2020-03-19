@@ -18,7 +18,7 @@ struct CloudKitManager {
     private let RecordType = "Task"
     
     func fetchTasks(completion: @escaping ([CKRecord]?, FetchError) -> Void) {
-        let container = CKContainer(identifier: "iCloud.com.vicensvives.todolist").publicCloudDatabase
+        let container = CKContainer(identifier: "{YOUR_CONTAINER_IDENTIFIER}").publicCloudDatabase
         let query = CKQuery(recordType: RecordType, predicate: NSPredicate(value: true))
         query.sortDescriptors = [NSSortDescriptor(key: "createdAt", ascending: false)]
         
@@ -46,7 +46,7 @@ struct CloudKitManager {
     
     
     func deleteRecord(record: CKRecord, completionHandler: @escaping (FetchError) -> Void) {
-        let publicDatabase = CKContainer(identifier: "iCloud.com.vicensvives.todolist").publicCloudDatabase
+        let publicDatabase = CKContainer(identifier: "{YOUR_CONTAINER_IDENTIFIER}").publicCloudDatabase
         publicDatabase.delete(withRecordID: record.recordID) { (recordID, error) -> Void in
             guard let _ = error else {
                 completionHandler(.none)
@@ -59,7 +59,7 @@ struct CloudKitManager {
     
     
     func addTask(_ task: String, completionHandler: @escaping (CKRecord?, FetchError) -> Void) {
-        let publicDatabase = CKContainer(identifier: "iCloud.com.vicensvives.todolist").publicCloudDatabase
+        let publicDatabase = CKContainer(identifier: "{YOUR_CONTAINER_IDENTIFIER}").publicCloudDatabase
         let record = CKRecord(recordType: RecordType)
         
         record.setObject(task as __CKRecordObjCValue, forKey: "title")
@@ -78,7 +78,7 @@ struct CloudKitManager {
     
     
     func updateTask(_ task: CKRecord, completionHandler: @escaping (CKRecord?, FetchError) -> Void) {
-        let publicDatabase = CKContainer(identifier: "iCloud.com.vicensvives.todolist").publicCloudDatabase
+        let publicDatabase = CKContainer(identifier: "{YOUR_CONTAINER_IDENTIFIER}").publicCloudDatabase
         
         publicDatabase.save(task, completionHandler: { (record, error) in
             guard let _ = error else {
